@@ -5,22 +5,25 @@ import {
   BarChart, Bar, XAxis, YAxis, PieChart, Pie, Cell, LineChart, 
   Line, Tooltip, Legend, ResponsiveContainer, CartesianGrid, ScatterChart, Scatter 
 } from 'recharts';
+import { ChevronLeft, ChevronRight, Users, Utensils, DollarSign, Activity, Clock, Truck, MessageSquare, Bell } from 'lucide-react';
 import DashboardLayout from '../../components/DashboardLayout';
 
 // Sample data for charts
 const monthlyData = [
-  { name: 'Jan', donations: 400, meals: 240 },
-  { name: 'Feb', donations: 300, meals: 139 },
-  { name: 'Mar', donations: 200, meals: 980 },
-  { name: 'Apr', donations: 278, meals: 390 },
-  { name: 'May', donations: 189, meals: 480 },
-  { name: 'Jun', donations: 239, meals: 380 },
+  { name: 'Jan', donations: 120, meals: 240 },
+  { name: 'Feb', donations: 150, meals: 300 },
+  { name: 'Mar', donations: 180, meals: 360 },
+  { name: 'Apr', donations: 200, meals: 400 },
+  { name: 'May', donations: 250, meals: 500 },
+  { name: 'Jun', donations: 300, meals: 600 },
 ];
 
 const recipientData = [
-  { name: 'Individuals', value: 400 },
-  { name: 'Organizations', value: 300 },
-  { name: 'Communities', value: 300 },
+  { name: 'NGO A', value: 35 },
+  { name: 'NGO B', value: 25 },
+  { name: 'NGO C', value: 20 },
+  { name: 'NGO D', value: 15 },
+  { name: 'Others', value: 5 },
 ];
 
 const foodTypeDistribution = [
@@ -42,44 +45,44 @@ const recipientGrowth = [
 
 const customerReviews = [
   {
-    name: 'Jons Sena',
-    rating: 4.5,
-    review: 'Great platform for food donation!',
-    image: '/api/placeholder/100/100'
+    name: 'NGO A',
+    rating: 5,
+    review: 'Excellent food quality and timely delivery. The hotel staff is very cooperative.',
+    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&auto=format&q=80',
   },
   {
-    name: 'Sofia',
-    rating: 4.0,
-    review: 'Easy to use and very helpful',
-    image: '/api/placeholder/100/100'
+    name: 'NGO B',
+    rating: 4,
+    review: 'Great initiative by the hotel. Food is always fresh and well-packaged.',
+    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&auto=format&q=80',
   },
   {
-    name: 'Anandreansyah',
-    rating: 4.5,
-    review: 'Connecting food donors efficiently',
-    image: '/api/placeholder/100/100'
+    name: 'NGO C',
+    rating: 5,
+    review: 'Very professional and reliable partner. Thank you for your support.',
+    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&auto=format&q=80',
   },
   {
-    name: 'Sarah Johnson',
-    rating: 5.0,
-    review: 'Amazing initiative to reduce food waste',
-    image: '/api/placeholder/100/100'
+    name: 'NGO D',
+    rating: 4,
+    review: 'Consistent quality and quantity. Appreciate your dedication to the cause.',
+    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&auto=format&q=80',
   },
   {
-    name: 'Michael Chen',
-    rating: 4.8,
-    review: 'Very organized and professional',
-    image: '/api/placeholder/100/100'
+    name: 'NGO E',
+    rating: 5,
+    review: 'Outstanding service and commitment to food donation program.',
+    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&auto=format&q=80',
   },
   {
-    name: 'Emma Wilson',
-    rating: 4.2,
-    review: 'Great community impact',
-    image: '/api/placeholder/100/100'
-  }
+    name: 'NGO F',
+    rating: 4,
+    review: 'Very satisfied with the food quality and delivery schedule.',
+    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&auto=format&q=80',
+  },
 ];
 
-const COLORS = ['#ADB2D4', '#C7D9DD', '#D5E5D5', '#EEF1DA'];
+const COLORS = ['#ADB2D4', '#C7D9DD', '#D5E5D5', '#EEF1DA', '#F5EEDC'];
 
 interface Donation {
   id: string;
@@ -113,18 +116,18 @@ const sampleDonations: Donation[] = [
     type: 'food',
     description: 'Fresh Vegetables',
     quantity: '50 kg',
-    donor: 'John Doe',
+    donor: 'NGO A',
     date: '2024-03-15',
-    status: 'pending'
+    status: 'accepted'
   },
   {
     id: '2',
     type: 'money',
     description: 'Monetary Donation',
     quantity: '$500',
-    donor: 'Jane Smith',
+    donor: 'NGO B',
     date: '2024-03-14',
-    status: 'accepted'
+    status: 'pending'
   }
 ];
 
@@ -148,14 +151,14 @@ const sampleDistributions: Distribution[] = [
 const sampleMessages: Message[] = [
   {
     id: '1',
-    sender: 'John Doe',
+    sender: 'NGO A',
     content: 'I have some fresh vegetables to donate.',
     date: '2024-03-15',
     isRead: false
   },
   {
     id: '2',
-    sender: 'Jane Smith',
+    sender: 'NGO B',
     content: 'When is the next distribution event?',
     date: '2024-03-14',
     isRead: true
@@ -164,14 +167,14 @@ const sampleMessages: Message[] = [
 
 export default function DashboardPage() {
   const [selectedPeriod, setSelectedPeriod] = useState('month');
-  const [selectedChart, setSelectedChart] = useState('bar');
+  const [selectedChart, setSelectedChart] = useState('line');
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Auto-slide functionality
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % customerReviews.length);
-    }, 5000); // Change slide every 5 seconds
+      setCurrentSlide((prev) => (prev === customerReviews.length - 1 ? 0 : prev + 1));
+    }, 5000);
 
     return () => clearInterval(timer);
   }, []);
@@ -379,7 +382,7 @@ export default function DashboardPage() {
                       key={index} 
                       className="w-full flex-shrink-0 px-4"
                     >
-                      <div className="p-4 rounded-lg bg-gray-50 dark:bg-gray-700 max-w-md mx-auto">
+                      <div className="p-4 rounded-lg bg-gray-50 dark:bg-gray-700">
                         <div className="flex items-center mb-2">
                           <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
                             <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
